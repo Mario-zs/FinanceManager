@@ -70,4 +70,21 @@
     nbproject/build-impl.xml file. 
 
     -->
+<target name="fat-jar" depends="jar">
+
+    <mkdir dir="dist/fatjar"/>
+
+    <jar destfile="dist/fatjar/FinanceManager-fat.jar">
+
+        <zipgroupfileset dir="dist/lib" includes="*.jar"/>
+
+        <zipfileset src="dist/FinanceManager.jar"/>
+
+        <manifest>
+            <attribute name="Main-Class" value="ventanas.Inicio"/>
+        </manifest>
+
+    </jar>
+
+</target>
 </project>

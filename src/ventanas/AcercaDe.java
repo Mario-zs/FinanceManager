@@ -59,7 +59,7 @@ public class AcercaDe extends javax.swing.JDialog {
         txtArea_acercaDe.setColumns(20);
         txtArea_acercaDe.setLineWrap(true);
         txtArea_acercaDe.setRows(5);
-        txtArea_acercaDe.setText("Finance Manager v1.0\n\nAplicación de escritorio para la gestión y control de ingresos y egresos personales.\nPermite registrar movimientos financieros, aplicar filtros por tipo y fecha,\ny generar reportes en formato PDF.\n\nDesarrollado por Mario Alberto Melgarejo Villaseñor © 2026\n\nTecnologías utilizadas:\n- Java\n- Swing\n- MySQL\n- Apache PDFBox\n\nEste software es de uso personal.\nSe recomienda realizar respaldos periódicos de la base de datos.\nEl desarrollador no se responsabiliza por la pérdida de información.\n");
+        txtArea_acercaDe.setText("Finance Manager v1.0\n\nAplicación de escritorio para la gestión y control de ingresos y egresos personales.\nPermite registrar movimientos financieros, aplicar filtros por tipo y fecha,\ny generar reportes en formato PDF.\n\nDesarrollado por Mario Alberto Melgarejo Villaseñor © 2026\n\nTecnologías utilizadas:\n- Java\n- Swing\n- SQLite\n- Apache PDFBox\n\nEste software es de uso personal.\nSe recomienda realizar respaldos periódicos de la base de datos.\nEl desarrollador no se responsabiliza por la pérdida de información.");
         txtArea_acercaDe.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtArea_acercaDe);
 

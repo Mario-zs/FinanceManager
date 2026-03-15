@@ -8,7 +8,10 @@ Permite registrar ingresos y egresos, calcular saldo dinámico, aplicar filtros 
 ##  Descripción
 
 **Finance Manager** es una aplicación orientada a la administración básica de finanzas personales.  
-El sistema permite a los usuarios registrarse, iniciar sesión y llevar un control detallado de sus movimientos financieros mediante una base de datos local MySQL.
+El sistema permite a los usuarios registrarse, iniciar sesión y llevar un control detallado de sus movimientos financieros mediante una base de datos local.
+
+- **MySQL (v1.0)** - Requiere un servidor de base de datos local.
+- **SQLite (v1.1)** - Base de datos embebida que se crea automáticamente al ejecutar la aplicación.
 
 El proyecto fue desarrollado siguiendo prácticas como:
 
@@ -54,7 +57,8 @@ El proyecto fue desarrollado siguiendo prácticas como:
 
 - **Java SE**
 - **Swing (Interfaz gráfica)**
-- **MySQL (Base de datos local)**
+- **MySQL (Base de datos relacional)**
+- **SQLite (Base de datos embebida)**
 - **JDBC**
 - **Apache PDFBox (Generación de PDF)**
 
@@ -67,7 +71,7 @@ El proyecto está dividido en dos capas principales:
 ###  `clases`
 Contiene la lógica de negocio y acceso a datos:
 
-- `Conexion` → Conexión a MySQL
+- `Conexion` → Gestión de conexión a base de datos (MySQL / SQLite)
 - `Seguridad` → Hash SHA-256 para contraseñas
 - `Usuarios` → Registro y autenticación
 - `Movimientos` → Gestión de ingresos y egresos
@@ -98,7 +102,11 @@ Contiene la interfaz gráfica (Swing):
 
 ##  Base de Datos
 
-El proyecto incluye un script SQL para crear la base de datos:
+El proyecto incluye dos opciones de base de datos.
+
+### MySQL (v 1.0)
+
+El repositorio incluye un script SQL para crear la base de datos:
 
 ### 📁 `bd_fm.sql`
 
@@ -111,36 +119,56 @@ Contiene:
 - Restricciones `UNIQUE`
 - Tipos de datos adecuados
 
-### Modelo relacional
+Esta versión requiere un servidor MySQL local.
 
-- Un usuario puede tener múltiples movimientos
-- El saldo no se almacena, se calcula dinámicamente
+---
+
+### SQLite (v1.1)
+
+La versión SQLite **no requiere instalación de servidor de base de datos**.
+
+Al ejecutar el archivo `.jar`, la aplicación crea automáticamente una carpeta
+
+**data/**
+
+Dentro de ella se genera el archivo:
+
+**bd_fm.db**
+
+Este archivo contiene todos los datos de los usuarios.
+
+La base de datos se almacena **localmente en la misma carpeta donde se ejecuta la aplicación**.
+
+La estructura de tablas se genera automáticamente desde el código si la base de datos no existe.
 
 ---
 
 ##  Instalación y ejecución
 
-### 1️⃣ Clonar el repositorio
+Existen dos formas de ejecutar la aplicación dependiendo de la versión utilizada.
 
-```bash
-git clone https://github.com/Mario-zs/FinanceManager.git
-```
 ---
 
-### 2️⃣ Crear la base de datos
+### Opción — SQLite (v1.1)
 
-Ejecutar el archivo:
+No requiere configuración de base de datos.
+
+1. Descargar el archivo `.jar` desde la sección **Releases**
+2. Ejecutar el archivo
+
+La base de datos se creará automáticamente en el primer inicio.
+
+---
+
+### Opción — MySQL (v1.0)
+
+1️⃣ Crear la base de datos ejecutando:
 
 ```sql
 bd_fm.sql
 ```
-en MySQL para crear la base de datos y sus tablas.
 
----
-
-### 3️⃣ Configurar conexión
-
-Verificar los datos de conexión en la clase Conexion.java:
+2️⃣ Configurar la conexión en Conexion.java:
 
 ```Java
 private static final String URL = "jdbc:mysql://localhost/bd_fm?serverTimezone=UTC";
@@ -148,17 +176,7 @@ private static final String USER = "root";
 private static final String PASSWORD = "";
 ```
 
-Modificar si tu configuración local es diferente.
-
----
-
-### 4️⃣ Ejecutar la aplicación
-
-- Abrir el proyecto en NetBeans o IntelliJ IDEA
-- Ejecutar la clase principal:
-```Java
-Inicio.java
-```
+3️⃣ Ejecutar la aplicación desde el IDE o desde el .jar.
 
 ---
 
@@ -204,6 +222,19 @@ Inicio.java
 
 
 ---
+
+
+##  Versiones del proyecto
+
+| Versión | Base de datos | Descripción |
+|--------|---------------|-------------|
+| v1.1 | SQLite | No requiere servidor de base de datos. |
+| v1.0 | MySQL | Versión original que utiliza servidor MySQL local. |
+
+La versión SQLite simplifica la instalación y permite ejecutar la aplicación sin dependencias externas.
+
+---
+
 
 ##  Licencia
 

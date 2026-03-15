@@ -254,7 +254,7 @@ public class ReportePDF {
         float textY = y - 14;
         float cursorX = x;
 
-        String[] values = {String.valueOf(index), m.getTipo(), String.format("$ %, .2f", m.getMonto()), m.getFecha().toString()};
+        String[] values = {String.valueOf(index), m.getTipo(), String.format("$ %,.2f", m.getMonto()), m.getFecha().toString()};
 
         for (int i = 0; i < values.length; i++) {
             content.addRect(cursorX, y - 18, colWidths[i], 18);

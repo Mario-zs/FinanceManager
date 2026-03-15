@@ -58,7 +58,7 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="Finance Manager v1.0&#xa;&#xa;Aplicaci&#xf3;n de escritorio para la gesti&#xf3;n y control de ingresos y egresos personales.&#xa;Permite registrar movimientos financieros, aplicar filtros por tipo y fecha,&#xa;y generar reportes en formato PDF.&#xa;&#xa;Desarrollado por Mario Alberto Melgarejo Villase&#xf1;or &#xa9; 2026&#xa;&#xa;Tecnolog&#xed;as utilizadas:&#xa;- Java&#xa;- Swing&#xa;- MySQL&#xa;- Apache PDFBox&#xa;&#xa;Este software es de uso personal.&#xa;Se recomienda realizar respaldos peri&#xf3;dicos de la base de datos.&#xa;El desarrollador no se responsabiliza por la p&#xe9;rdida de informaci&#xf3;n.&#xa;"/>
+            <Property name="text" type="java.lang.String" value="Finance Manager v1.0&#xa;&#xa;Aplicaci&#xf3;n de escritorio para la gesti&#xf3;n y control de ingresos y egresos personales.&#xa;Permite registrar movimientos financieros, aplicar filtros por tipo y fecha,&#xa;y generar reportes en formato PDF.&#xa;&#xa;Desarrollado por Mario Alberto Melgarejo Villase&#xf1;or &#xa9; 2026&#xa;&#xa;Tecnolog&#xed;as utilizadas:&#xa;- Java&#xa;- Swing&#xa;- SQLite&#xa;- Apache PDFBox&#xa;&#xa;Este software es de uso personal.&#xa;Se recomienda realizar respaldos peri&#xf3;dicos de la base de datos.&#xa;El desarrollador no se responsabiliza por la p&#xe9;rdida de informaci&#xf3;n."/>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
         </Component>

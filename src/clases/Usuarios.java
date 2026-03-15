@@ -60,7 +60,7 @@ public class Usuarios {
             String hash = Seguridad.generarHash(pass);
 
             try (PreparedStatement pst = cn.prepareStatement(
-                    "INSERT INTO usuarios (username, pass_hash, fecha_creacion) VALUES (?, ?, CURDATE())",
+                    "INSERT INTO usuarios (username, pass_hash, fecha_creacion) VALUES (?, ?, DATE('now'))",
                     Statement.RETURN_GENERATED_KEYS)) {
 
                 pst.setString(1, user);
@@ -93,8 +93,10 @@ public class Usuarios {
                     cn.rollback();
                 } catch (Exception ignored) {
                 }
+                
+                String msg = e.getMessage();
 
-                if (e.getErrorCode() == 1062) {
+                if (msg != null && msg.contains("UNIQUE constraint failed")) {
                     throw new IllegalStateException("Usuario duplicado", e);
                 }
 

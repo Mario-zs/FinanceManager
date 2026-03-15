@@ -146,8 +146,8 @@ public class Registrarse extends javax.swing.JFrame {
 
         //Recuperar datos
         user = txt_user.getText().trim();
-        pass = txt_password.getText().trim();
-        confirmarPass = txt_confirmarPassword.getText();
+        pass = new String(txt_password.getPassword());
+        confirmarPass = new String(txt_confirmarPassword.getPassword());
         saldoInicial = txt_saldoInicial.getText().trim();
 
         if (user.equals("")) {
@@ -230,24 +230,29 @@ public class Registrarse extends javax.swing.JFrame {
             } catch (RuntimeException e) {
 
                 JOptionPane.showMessageDialog(this,
-                        "No se pudo conectar con la base de datos.\n\n"
-                        + "No se pudo conectar con la base de datos local.\nVerifique que el servicio MySQL esté activo y vuelva a intentarlo.",
+                        "No se pudo conectar con la base de datos SQLite.\n"
+                        + "Verifique que el archivo bd_fm.db esté accesible.",
                         "Error de conexión",
                         JOptionPane.ERROR_MESSAGE);
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Faltan campos por completar.\nPor favor llene todos los datos antes de continuar.",
-                    "Campos incompletos",
-                    JOptionPane.WARNING_MESSAGE);
-
-            txt_user.setBackground(Color.white);
-            txt_password.setBackground(Color.white);
-            txt_confirmarPassword.setBackground(Color.white);
-            txt_saldoInicial.setBackground(Color.white);
-
+                e.printStackTrace(); // Para ver el error real en consola
+            
         }
+
+    }
+
+    
+        else {
+            JOptionPane.showMessageDialog(this,
+                "Faltan campos por completar.\nPor favor llene todos los datos antes de continuar.",
+                "Campos incompletos",
+                JOptionPane.WARNING_MESSAGE);
+
+        txt_user.setBackground(Color.white);
+        txt_password.setBackground(Color.white);
+        txt_confirmarPassword.setBackground(Color.white);
+        txt_saldoInicial.setBackground(Color.white);
+
+    }
 
 
     }//GEN-LAST:event_btn_registrarseActionPerformed

@@ -1,15 +1,14 @@
 package clases;
-import java.util.Date;
 
 public class Movimiento {
     
     private int idMovimiento;
     private String tipo;
     private double monto;
-    private Date fecha;
+    private String fecha;
     private String comentarios;
     
-    public Movimiento(int idMovimiento, String tipo, double monto, Date fecha, String comentarios){
+    public Movimiento(int idMovimiento, String tipo, double monto, String fecha, String comentarios){
         this.idMovimiento = idMovimiento;
         this.tipo = tipo;
         this.monto = monto;
@@ -30,7 +29,7 @@ public class Movimiento {
         return monto;
     }
     
-    public Date getFecha(){
+    public String getFecha(){
         return fecha;
     }
     

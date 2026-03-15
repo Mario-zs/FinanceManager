@@ -16,7 +16,7 @@ public class HistorialMovimientos extends javax.swing.JDialog {
     int idUsuario, contador = 1, idMovimiento, id_visual;
     List<Integer> ids = new ArrayList<>();
     List<Integer> idVisual = new ArrayList<>();
-    List<Integer> anios = new ArrayList<>();
+    List<String> anios = new ArrayList<>();
     List<Movimiento> listaMovimientos = new ArrayList<>();
 
     //Datos para PDF
@@ -55,8 +55,8 @@ public class HistorialMovimientos extends javax.swing.JDialog {
         Movimientos m = new Movimientos();
         anios = m.obtenerAniosUsuarios(idUsuario);
 
-        for (Integer anio : anios) {
-            cmb_anio.addItem(anio.toString());
+        for (String anio : anios) {
+            cmb_anio.addItem(anio);
         }
 
         jLabel_sinRegistros.setVisible(false);
@@ -180,7 +180,7 @@ public class HistorialMovimientos extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cargarMovimientos(String filtro, Integer mes, Integer anio) {
+    private void cargarMovimientos(String filtro, String mes, String anio) {
 
         DefaultTableModel modelo = (DefaultTableModel) jTable_movimientos.getModel();
 
@@ -221,9 +221,9 @@ public class HistorialMovimientos extends javax.swing.JDialog {
         String tipo = cmb_filtroBusqueda.getSelectedItem().toString();
         String filtro = null;
         int mesIndex = cmb_mes.getSelectedIndex();
-        Integer mes = null;
+        String mes = null;
         String anioSel = cmb_anio.getSelectedItem().toString();
-        Integer anio = null;
+        String anio = null;
 
         //ParaPDF
         tipoAplicado = tipo;
@@ -237,11 +237,11 @@ public class HistorialMovimientos extends javax.swing.JDialog {
         }
 
         if (mesIndex >= 1) {
-            mes = mesIndex;
+            mes = String.format("%02d", mesIndex);
         }
 
         if (!anioSel.equals(HistorialMovimientos.ANIO_TODOS)) {
-            anio = Integer.parseInt(anioSel);
+            anio = anioSel;
         }
 
         if (mes != null && anio == null) {

@@ -137,8 +137,8 @@ public class Login extends javax.swing.JFrame {
                 idUsuario = u.login();
             } catch (RuntimeException e) {
                 JOptionPane.showMessageDialog(this,
-                        "No se pudo conectar con la base de datos.\n\n"
-                        + "No se pudo conectar con la base de datos local.\nVerifique que el servicio MySQL esté activo y vuelva a intentarlo.",
+                        "No se pudo acceder a la base de datos SQLite.\n\n"
+                        + "Verifique que el archivo 'bd_fm.db' exista y no esté en uso.",
                         "Error de conexión",
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -177,11 +177,11 @@ public class Login extends javax.swing.JFrame {
         this.dispose();
         new Inicio().setVisible(true);
     }
-    
-    private void Limpiar(){
+
+    private void Limpiar() {
         txt_password.setText("");
         txt_user.setText("");
-    } 
+    }
 
     /**
      * @param args the command line arguments

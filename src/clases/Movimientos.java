@@ -1,8 +1,10 @@
 package clases;
 
 import java.sql.*;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.table.DefaultTableModel;
 
 public class Movimientos {
@@ -10,10 +12,12 @@ public class Movimientos {
     public static final String TIPO_INGRESO = "Ingreso";
     public static final String TIPO_EGRESO = "Egreso";
     private List<Movimiento> listaMovimientos = new ArrayList<>();
+    
+    NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
     public boolean registrarSaldoI(Connection cn, int id_usuario, double saldoI) {
         String sql = "INSERT INTO movimientos (id_usuario, tipo, monto, fecha, comentarios) "
-                + "VALUES (?,?,?,CURDATE(),'Saldo Inicial')";
+                + "VALUES (?,?,?,DATE('now', 'localtime'),'Saldo Inicial')";
 
         try (PreparedStatement pst = cn.prepareStatement(sql)) {
             pst.setInt(1, id_usuario);
@@ -109,7 +113,7 @@ public class Movimientos {
 
     public boolean agregarMovimiento(String tipo, double cantidad, String comentarios, int idUsuario) {
         String sql = "INSERT INTO movimientos (id_usuario, tipo, monto, fecha, comentarios) "
-                + "VALUES (?, ?, ?, CURDATE(), ?)";
+                + "VALUES (?, ?, ?, DATE('now', 'localtime'), ?)";
 
         try (Connection cn = Conexion.conectar(); PreparedStatement pst = cn.prepareStatement(sql)) {
 
@@ -127,10 +131,10 @@ public class Movimientos {
         }
     }
 
-    public List<Integer> obtenerAniosUsuarios(int idUsuario) {
-        List<Integer> anios = new ArrayList<>();
+    public List<String> obtenerAniosUsuarios(int idUsuario) {
+        List<String> anios = new ArrayList<>();
 
-        String sql = "SELECT DISTINCT YEAR(fecha) AS anio "
+        String sql = "SELECT DISTINCT strftime('%Y', fecha) AS anio "
                 + "FROM movimientos "
                 + "WHERE id_usuario = ? "
                 + "ORDER BY anio";
@@ -141,7 +145,7 @@ public class Movimientos {
 
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
-                    anios.add(rs.getInt("anio"));
+                    anios.add(rs.getString("anio"));
                 }
             }
 
@@ -152,7 +156,7 @@ public class Movimientos {
         return anios;
     }
 
-    public int obtenerMovimientos(DefaultTableModel modelo, int idUsuario, String filtro, Integer mes, Integer anio,
+    public int obtenerMovimientos(DefaultTableModel modelo, int idUsuario, String filtro, String mes, String anio,
             List<Integer> ids, List<Integer> idVisual) throws SQLException {
 
         modelo.setRowCount(0);
@@ -172,12 +176,12 @@ public class Movimientos {
 
         // filtro por mes
         if (mes != null) {
-            sql.append(" AND MONTH(fecha) = ?");
+            sql.append(" AND strftime('%m', fecha) = ?");
         }
-
-        // filtro por año
+        
+        // filtro año
         if (anio != null) {
-            sql.append(" AND YEAR(fecha) = ?");
+            sql.append(" AND strftime('%Y', fecha) = ?");
         }
 
         sql.append(" ORDER BY fecha DESC");
@@ -190,10 +194,10 @@ public class Movimientos {
                 pst.setString(index++, filtro);
             }
             if (mes != null) {
-                pst.setInt(index++, mes);
+                pst.setString(index++, mes);
             }
             if (anio != null) {
-                pst.setInt(index++, anio);
+                pst.setString(index++, anio);
             }
 
             try (ResultSet rs = pst.executeQuery()) {
@@ -204,7 +208,7 @@ public class Movimientos {
                     int idMovimiento = rs.getInt("id_movimiento");
                     String tipo = rs.getString("tipo");
                     double monto = rs.getDouble("monto");
-                    Date fecha = rs.getDate("fecha");
+                    String fecha = rs.getString("fecha");
                     String comentarios = rs.getString("comentarios");
 
                     // guardar IDs
@@ -217,7 +221,7 @@ public class Movimientos {
                     listaMovimientos.add(mov);
 
                     // llenar tabla
-                    Object[] fila = {contador--, tipo, monto, fecha};
+                    Object[] fila = {contador--, tipo, nf.format(monto), fecha};
                     modelo.addRow(fila);
                 }
             }
@@ -251,7 +255,16 @@ public class Movimientos {
                 if (rs.next()) {
                     String tipo = rs.getString("tipo");
                     double monto = rs.getDouble("monto");
-                    Date fecha = rs.getDate("fecha");
+                    String fecha = rs.getString("fecha");
+                    
+                    //Convertir fechaTxt a Date
+                    /*java.util.Date fecha = null;
+                    try {
+                        fecha = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(fechaTxt);
+                    } catch (Exception e) {
+                        fecha = new java.util.Date();
+                    }*/
+                    
                     String comentarios = rs.getString("comentarios");
 
                     movimiento = new Movimiento(idMovimiento, tipo, monto, fecha, comentarios);
@@ -286,5 +299,5 @@ public class Movimientos {
 
         return total;
     }
-    
+
 }

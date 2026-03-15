@@ -1,20 +1,23 @@
 package ventanas;
+
 import clases.Movimiento;
 import clases.Movimientos;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class DetallesMovimiento extends javax.swing.JDialog {
 
     int idMovimiento /*id_visual*/;
-    
+     NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
     public DetallesMovimiento(java.awt.Window parent, int idMovimiento, int id_visual) {
         super(parent, ModalityType.APPLICATION_MODAL);
         initComponents();
-        
-        this.idMovimiento = idMovimiento;
-        //this.id_visual = id_visual;
 
+        this.idMovimiento = idMovimiento;
+        
         setTitle("Detalles del movimiento " + id_visual);
         jLabel_titulo.setText("Detalles del movimiento: " + id_visual);
         setResizable(false);
@@ -25,19 +28,21 @@ public class DetallesMovimiento extends javax.swing.JDialog {
 
         mostrarDetalles();
     }
-    
+
     public Image getIconImage() {
         Image icono = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/Icono.png"));
         return icono;
     }
-    
+
     private void mostrarDetalles() {
         Movimientos m = new Movimientos();
         Movimiento mov = m.obtenerDetallesMovimiento(idMovimiento);
 
         if (mov != null) {
-            jLabel_fechaRegistro.setText(mov.getFecha().toString());
-            jLabel_cantidad.setText("$" + mov.getMonto());
+
+            jLabel_fechaRegistro.setText(mov.getFecha());
+
+            jLabel_cantidad.setText(nf.format(mov.getMonto()));
             jLabel_tipo.setText(mov.getTipo());
             textPane_comentarios.setText(mov.getComentarios());
         }
